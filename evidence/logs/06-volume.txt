@@ -1,0 +1,52 @@
+Script started on 2026-11-03 15:17:12+09:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="45" LINES="6"]
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdoc[27m[7mk[27m[7mer volume create codyssey-data[27m[A]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ docker volume create codyssey-data
+[?2004lcodyssey-data
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdoc[27m[7mk[27m[7mer volume ls[27m[A]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ docker volume ls
+[?2004lDRIVER    VOLUME NAME
+local     codyssey-data
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdoc[27m[7mk[27m[7mer run -d --name codyssey-vol-1 -v codyssey-[27m[7md[27m[7mata:/data ubuntu:24.04 sleep infinity[27m[A[A]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ docker run -d --name codyssey-vol-1 -v codyssey-data:/data ubuntu:24.04 sleep infinity
+[?2004lf8f60815ee5f4fb1369b5528c993d77e1b79764b2e531b2bfe986586700c23eb
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdoc[27m[7mk[27m[7mer exec codyssey-vol-1 sh -c 'echo "Persiste[27m[7mn[27m[7mt Data" > /data/test.txt'[27m[A[A]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ docker exec codyssey-vol-1 sh -c 'echo "Persistent Data" > /data/test.txt'
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdoc[27m[7mk[27m[7mer exec codyssey-vol-1 cat /data/test.txt[27m[Adocker exec codyssey-vol-1 cat /data/test.txt
+[?2004lPersistent Data
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdoc[27m[7mk[27m[7mer rm -f codyssey-vol-1[27m[A]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ docker rm -f codyssey-vol-1
+[?2004lcodyssey-vol-1
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [K]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdocker ps -a[27mdocker ps -a
+[?2004lCONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS                        PORTS                                     NAMES
+816e92a78e0d   gn-codyssey-web:1.0   "/docker-entrypoint.…"   14 minutes ago   Up 14 minutes                 0.0.0.0:8082->80/tcp, [::]:8082->80/tcp   gn-codyssey-bind
+c160080c8ecb   gn-codyssey-web:1.0   "/docker-entrypoint.…"   18 minutes ago   Up 18 minutes                 0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   gn-codyssey-web-8081
+253afaca50ef   gn-codyssey-web:1.0   "/docker-entrypoint.…"   23 minutes ago   Up 23 minutes                 0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   gn-codyssey-web
+cd08f6041864   ubuntu:24.04          "sleep infinity"         37 minutes ago   Exited (137) 36 minutes ago                                             codyssey-bg
+3de9244cecf4   ubuntu:24.04          "bash"                   39 minutes ago   Exited (0) 38 minutes ago                                               codyssey-ubuntu
+0d7fa3dfe625   hello-world           "/hello"                 47 minutes ago   Exited (0) 47 minutes ago                                               codyssey-hello
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdocker run -d --name codyssey-vol-2 [27m[7m-[27m[7mv codyssey-data:/data ubuntu:24.04 sleep infinity[27m[Adocker run -d --name codyssey-vol-2 -v codyssey-data:/data ubuntu:24.04 sleep infinity
+[?2004l90d9893d855678d4246d6f928cfc0806b4d256b0f4791c7776be10c955cb09b9
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdocker exec codyssey-vol-2 cat /data[27m[7m/[27m[7mtest.txt[27m[A]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ docker exec codyssey-vol-2 cat /data/test.txt
+[?2004lPersistent Data
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdocker volume inspect codyssey-data[27m
+[7mdocker ps -a[27m
+[7mexit[27m[A[A]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ docker volume inspect codyssey-data
+docker ps -a
+exit
+[?2004l[
+    {
+        "CreatedAt": "2026-11-03T06:17:19Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/codyssey-data/_data",
+        "Name": "codyssey-data",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS                        PORTS                                     NAMES
+90d9893d8556   ubuntu:24.04          "sleep infinity"         16 seconds ago   Up 15 seconds                                                           codyssey-vol-2
+816e92a78e0d   gn-codyssey-web:1.0   "/docker-entrypoint.…"   14 minutes ago   Up 14 minutes                 0.0.0.0:8082->80/tcp, [::]:8082->80/tcp   gn-codyssey-bind
+c160080c8ecb   gn-codyssey-web:1.0   "/docker-entrypoint.…"   19 minutes ago   Up 19 minutes                 0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   gn-codyssey-web-8081
+253afaca50ef   gn-codyssey-web:1.0   "/docker-entrypoint.…"   24 minutes ago   Up 24 minutes                 0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   gn-codyssey-web
+cd08f6041864   ubuntu:24.04          "sleep infinity"         37 minutes ago   Exited (137) 37 minutes ago                                             codyssey-bg
+3de9244cecf4   ubuntu:24.04          "bash"                   40 minutes ago   Exited (0) 39 minutes ago                                               codyssey-ubuntu
+0d7fa3dfe625   hello-world           "/hello"                 48 minutes ago   Exited (0) 48 minutes ago                                               codyssey-hello
+exit
+
+Script done on 2026-11-03 15:19:12+09:00 [COMMAND_EXIT_CODE="0"]
