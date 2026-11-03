@@ -1,0 +1,6 @@
+$ git config --list (selected entries)
+user.name=Jekt-o
+user.email=[MASKED]
+init.defaultbranch=main
+$ git branch --show-current
+main
