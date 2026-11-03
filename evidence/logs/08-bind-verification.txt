@@ -1,0 +1,16 @@
+$ docker ps --filter name=gn-codyssey-bind
+CONTAINER ID   IMAGE          COMMAND                  CREATED             STATUS             PORTS                                     NAMES
+816e92a78e0d   831b1f5be43c   "/docker-entrypoint.…"   About an hour ago   Up About an hour   0.0.0.0:8082->80/tcp, [::]:8082->80/tcp   gn-codyssey-bind
+$ curl http://localhost:8082
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>GN Codyssey Workstation</title>
+</head>
+<body>
+    <h1>GN Codyssey Development Workstation</h1>
+    <h2>Docker Web Server Test</h2>
+    <p>Bind Mount Updated Successfully!</p>
+</body>
+</html>

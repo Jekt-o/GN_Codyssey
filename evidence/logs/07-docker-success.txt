@@ -1,0 +1,58 @@
+Script started on 2026-11-03 15:36:30+09:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="74" LINES="41"]
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ [7mdocker --version[27m
+[7mdocker info --format '{{.ServerVersion}}'[27m
+[7mdocker ps -a[27m
+[7mdocker images[27m
+[7mdocker logs codyssey-hello[27m
+[7mdocker stats --no-stream[27m[A[A[A[A[A]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ docker --version
+docker info --format '{{.ServerVersion}}'
+docker ps -a
+docker images
+docker logs codyssey-hello
+docker stats --no-stream
+[?2004lDocker version 29.9.2, build a82e528
+29.9.2
+CONTAINER ID   IMAGE                 COMMAND                  CREATED             STATUS                         PORTS                                     NAMES
+90d9893d8556   ubuntu:24.04          "sleep infinity"         17 minutes ago      Up 17 minutes                                                            codyssey-vol-2
+816e92a78e0d   gn-codyssey-web:1.0   "/docker-entrypoint.…"   32 minutes ago      Up 32 minutes                  0.0.0.0:8082->80/tcp, [::]:8082->80/tcp   gn-codyssey-bind
+c160080c8ecb   gn-codyssey-web:1.0   "/docker-entrypoint.…"   36 minutes ago      Up 36 minutes                  0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   gn-codyssey-web-8081
+253afaca50ef   gn-codyssey-web:1.0   "/docker-entrypoint.…"   41 minutes ago      Up 41 minutes                  0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   gn-codyssey-web
+cd08f6041864   ubuntu:24.04          "sleep infinity"         55 minutes ago      Exited (137) 54 minutes ago                                              codyssey-bg
+3de9244cecf4   ubuntu:24.04          "bash"                   57 minutes ago      Exited (0) 56 minutes ago                                                codyssey-ubuntu
+0d7fa3dfe625   hello-world           "/hello"                 About an hour ago   Exited (0) About an hour ago                                             codyssey-hello
+                                                      [1m[106m[30mi[0m[0m [96mInfo → [0m[0m [38;5;0m[48;5;14m U [0m In Use
+[39m[1mIMAGE[0m                 [39m[1mID[0m             [39m[1mDISK USAGE[0m   [39m[1mCONTENT SIZE[0m   [39m[1mEXTRA[0m
+[34m[1mgn-codyssey-web:1.0[0m   [39m831b1f5be43c[0m       [39m93.6MB[0m         [39m26.3MB[0m   [38;5;0m[48;5;14m U [0m  
+[34m[1mhello-world:latest[0m    [39mc567b231f656[0m       [39m25.9kB[0m         [39m9.49kB[0m   [38;5;0m[48;5;14m U [0m  
+[34m[1mubuntu:24.04[0m          [39mfe81560990fa[0m        [39m119MB[0m         [39m31.7MB[0m   [38;5;0m[48;5;14m U [0m  
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+CONTAINER ID   NAME                   CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+90d9893d8556   codyssey-vol-2         0.00%     412KiB / 15.38GiB     0.00%     872B / 126B       0B / 0B           1
+816e92a78e0d   gn-codyssey-bind       0.00%     7.57MiB / 15.38GiB    0.05%     9.85kB / 8.11kB   0B / 12.3kB       9
+c160080c8ecb   gn-codyssey-web-8081   0.00%     9.668MiB / 15.38GiB   0.06%     7.11kB / 5.87kB   6.04MB / 12.3kB   9
+253afaca50ef   gn-codyssey-web        0.00%     7.383MiB / 15.38GiB   0.05%     7.57kB / 5.99kB   565kB / 12.3kB    9
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ eix[K[Kxit
+[?2004lexit
+
+Script done on 2026-11-03 15:36:42+09:00 [COMMAND_EXIT_CODE="0"]
