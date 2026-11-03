@@ -46,10 +46,10 @@ flowchart TD
 - [x] Docker 볼륨 영속성 검증
 - [x] Git 커밋 및 GitHub Push
 - [x] 실제 트러블슈팅 2건 정리
-- [ ] **`git config --list` 결과의 민감정보 마스킹본 첨부 및 기본 브랜치 설정 검증**
-- [ ] **VS Code 내 GitHub 계정 로그인 상태 별도 확인** (원격 Git 연결은 확인됨)
+- [x] **`git config --list` 주요 설정값 기록(이메일 마스킹) 및 기본 브랜치 설정 검증**
+- [x] **VS Code GitHub 계정 `Jekt-o` 로그인 확인**
 
-> 체크 상태는 업로드된 파일과 실습 화면을 근거로 작성했습니다. 마지막 두 항목은 저장소 연결과는 별도 검증 사항입니다.
+> 체크 상태는 GitHub에 업로드된 실제 파일과 실습 화면에 근거합니다. Git 설정 로그는 전체 설정 원문이 아니라 인증·개인정보 보호를 위해 **관련 항목만 선별하고 이메일을 마스킹한 결과**입니다.
 
 ---
 
@@ -294,7 +294,30 @@ git push origin main
 
 ![VS Code 소스 제어 및 원격 GitHub 연결](evidence/screenshots/08-github-vscode.png)
 
-> 보완 필요: 과제에서 요구하는 **`git config --list` 결과 기록**, Git 기본 브랜치·사용자 정보 검증, **VS Code 계정 메뉴에서 GitHub 로그인 확인**은 별도로 남깁니다. 위 사진은 원격 저장소·소스 제어 연결을 증명하지만 계정 로그인 자체를 단독 증명하지는 않습니다.
+### Git 사용자 설정 및 기본 브랜치 검증
+
+WSL Ubuntu에서 `git config --list`를 실행하고 관련 항목을 선별하여 이메일을 마스킹한 뒤, 현재 브랜치까지 함께 기록했습니다.
+
+```text
+$ git config --list (selected entries)
+user.name=Jekt-o
+user.email=[MASKED]
+init.defaultbranch=main
+$ git branch --show-current
+main
+```
+
+**증거:** [09-git-config-safe.txt — Git 설정 검증 로그](evidence/logs/09-git-config-safe.txt)
+
+### VS Code의 GitHub 계정 로그인 검증
+
+VS Code 계정 메뉴에 **`Jekt-o (GitHub)`**가 표시되는 화면을 확인했습니다. 기존 소스 제어·원격 저장소 검증과 더불어 VS Code 내 GitHub 로그인 상태도 확인했습니다.
+
+![VS Code 계정 메뉴의 Jekt-o (GitHub) 로그인 확인](evidence/screenshots/09-github-login.png)
+
+**증거:** [GitHub 로그인 스크린샷 원본](evidence/screenshots/09-github-login.png)
+
+> 인증 코드는 일회용이며 비밀번호·토큰을 증거에 포함하지 않았습니다. `09-git-config-safe.txt`는 `git config --list`의 **전체 출력이 아닌 선별·마스킹본**입니다.
 
 ---
 
@@ -347,14 +370,14 @@ docker logs gn-codyssey-review
 
 ## 12. 최종 보완 체크
 
-- [x] 필수 소스·Dockerfile·로그 8개·스크린샷 8개 GitHub 업로드
+- [x] 필수 소스·Dockerfile·실습 로그 9개·스크린샷 9개 GitHub 업로드
 - [x] Docker 권한 오류 해결 뒤 성공 기록 보강
 - [x] 포트 매핑 및 바인드 마운트 전후 화면 연결
 - [x] 볼륨 영속성 검증 로그 연결
 - [x] 트러블슈팅 2건 작성
-- [ ] `git config --list`의 실제 실행·마스킹 결과 추가
-- [ ] Git 기본 브랜치 설정 및 VS Code GitHub 계정 로그인 검증 결과 추가
-- [ ] Windows 정확한 버전 확인 후 실행 환경 표 보완
+- [x] `git config --list` 주요 항목을 이메일 마스킹 후 로그로 보관
+- [x] Git 기본 브랜치 `main` 설정 확인 및 VS Code GitHub 계정 로그인 증거 추가
+- [ ] **선택 보완:** Windows 호스트의 정확한 버전(예: Windows 11 24H2) 확인 후 실행 환경 표에 기재
 
 ---
 
