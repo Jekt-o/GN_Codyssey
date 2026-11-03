@@ -194,6 +194,28 @@ docker images
 
 **왜 필요한가?** 컨테이너의 내부 HTTP 포트 80번을 Windows 브라우저가 접근할 수 있도록 호스트 포트에 연결하기 때문입니다.
 
+### 네트워크 네임스페이스(Network Namespace)와 포트 포워딩 — 평가 항목 #13
+
+**네트워크 네임스페이스**는 Linux에서 네트워크 인터페이스, IP 주소, 라우팅 테이블, 포트 바인딩 등의 네트워크 자원을 격리하는 기능입니다. Docker의 기본 `bridge` 네트워크에서는 각 컨테이너가 별도의 네트워크 네임스페이스를 사용하므로, **컨테이너 내부의 `:80`에서 실행되는 NGINX가 호스트의 `:80`에 자동 노출되는 것은 아닙니다.** 따라서 외부에서 접속하려면 호스트 포트와 컨테이너 포트를 연결하는 포트 포워딩(포트 게시)이 필요합니다.
+
+```text
+Windows 브라우저 localhost:8080
+             │  (호스트 포트)
+             ▼
+Docker Desktop 포트 포워딩 (-p 8080:80)
+             │  Windows → Linux VM → 컨테이너
+             ▼
+컨테이너의 네트워크 네임스페이스
+  └── NGINX가 컨테이너 내부 :80에서 HTTP 요청 처리
+```
+
+- `-p 8080:80`: **호스트 8080 → 컨테이너 80** 연결. `-p 8081:80`도 독립된 다른 컨테이너의 80번 포트로 전달할 수 있습니다.
+- `EXPOSE 80`은 이미지가 사용하는 포트의 선언일 뿐, 호스트 포트를 자동으로 열지 않습니다.
+- Docker Desktop(Windows)은 호스트 포트로 들어온 접속을 내부 Linux 환경의 컨테이너로 전달합니다. 포트 게시가 없는 일반 `bridge` 컨테이너는 Windows 브라우저가 해당 서비스 포트로 직접 접속할 수 없습니다.
+- `-p 8080:80`은 기본적으로 모든 호스트 인터페이스에 게시될 수 있으므로, 로컬 개발 전용이라면 `-p 127.0.0.1:8080:80`으로 제한할 수 있습니다.
+
+**공식 참고:** [Docker — Port publishing and mapping](https://docs.docker.com/engine/network/port-publishing/) · [Docker Desktop — Networking](https://docs.docker.com/desktop/features/networking/)
+
 ```text
 Windows localhost:8080 ──→ NGINX 컨테이너 A :80
 Windows localhost:8081 ──→ NGINX 컨테이너 B :80
@@ -353,6 +375,57 @@ VS Code 계정 메뉴에 **`Jekt-o (GitHub)`**가 표시되는 화면을 확인�
 
 다른 PC에서도 다음처럼 동일한 웹 서버 이미지를 만들고 접속할 수 있습니다. Docker Desktop과 WSL 2·Docker 엔진을 먼저 준비해야 합니다.
 
+### 포트 충돌 진단 및 해결 절차 — 평가 항목 #16
+
+**가정한 오류 사례:** 이미 `8080` 포트를 쓰는 프로그램이 있는데 또 `-p 8080:80`으로 컨테이너를 실행하면 `port is already allocated` 또는 `bind: address already in use` 오류가 날 수 있습니다. 아래는 **실제로 발생했다고 주장하는 로그가 아니라, 재현·운영을 위한 진단 절차**입니다.
+
+**1단계 — Docker에서 8080 포트를 사용 중인지 확인 (WSL Ubuntu 터미널)**
+
+```bash
+docker ps --format 'table {{.Names}}\t{{.Ports}}'
+docker port gn-codyssey-web
+```
+
+`gn-codyssey-web`이 `0.0.0.0:8080->80/tcp`를 사용 중이라면 이 컨테이너가 이미 해당 포트를 게시하고 있다는 뜻입니다. **과제에서 사용한 컨테이너를 실수로 종료하지 않도록** 먼저 이름과 용도를 확인합니다.
+
+**2단계 — Windows 호스트에서 점유 프로세스와 PID 확인 (Windows PowerShell)**
+
+```powershell
+netstat -ano | findstr :8080
+Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction SilentlyContinue |
+  Select-Object LocalAddress,LocalPort,OwningProcess
+```
+
+`LISTENING` 또는 `Listen` 항목의 **PID(프로세스 ID)**를 확인하고, 다음과 같이 실제 PID에 해당하는 프로그램을 조사합니다.
+
+```powershell
+# 1234는 예시 PID — 실제 출력 값으로 교체
+Get-Process -Id 1234
+```
+
+WSL 내부의 프로세스도 의심된다면 Ubuntu에서 `sudo ss -ltnp 'sport = :8080'`으로 추가 확인할 수 있습니다. 다만 Docker Desktop이 Windows 쪽에서 포트를 게시하는 경우에는 **WSL의 `ss` 목록에 점유 프로세스가 보이지 않을 수 있으므로**, Windows PowerShell과 `docker ps`를 함께 확인합니다.
+
+**3단계 — 충돌 해소 (아래 중 하나만 선택)**
+
+| 방법 | 명령/조치 | 주의사항 |
+|---|---|---|
+| Docker 컨테이너가 사용 중 | `docker stop gn-codyssey-web` | 내가 관리하는 해당 컨테이너이고 **중지해도 괜찮은 경우에만** |
+| Windows 프로그램이 사용 중 | 점유 PID와 프로그램 확인 → 프로그램 정상 종료 | 알 수 없는 프로세스나 시스템 프로세스를 무작정 강제 종료하지 않음 |
+| 기존 서비스를 계속 유지 | 다른 호스트 포트를 사용: 아래 예제 | 내부 NGINX 포트 `80`은 그대로 유지 |
+
+```bash
+# 8080이 사용 중일 때: 호스트 포트를 8090으로 변경
+docker run -d --name gn-codyssey-alt -p 127.0.0.1:8090:80 gn-codyssey-web:1.0
+
+# 변경된 포트로 응답·매핑 확인
+docker ps --filter name=gn-codyssey-alt
+curl http://localhost:8090
+```
+
+`8090`도 비어 있어야 하며, 이미 `gn-codyssey-alt`라는 이름의 컨테이너가 있다면 다른 이름을 지정합니다. **가장 안전한 우선 대안은 기존 실행 환경을 유지하고 사용하지 않는 호스트 포트를 선택하는 것**입니다.
+
+**공식 참고:** [Docker Desktop — Port already allocated 오류](https://docs.docker.com/desktop/troubleshoot-and-support/troubleshoot/topics/)
+
 ```bash
 git clone https://github.com/Jekt-o/GN_Codyssey.git
 cd GN_Codyssey
@@ -375,10 +448,12 @@ docker logs gn-codyssey-review
 - [x] 포트 매핑 및 바인드 마운트 전후 화면 연결
 - [x] 볼륨 영속성 검증 로그 연결
 - [x] 트러블슈팅 2건 작성
+- [x] 컨테이너 **네트워크 네임스페이스**와 포트 포워딩 원리 설명 (#13)
+- [x] Docker/Windows 포트 점유 확인 → 프로세스 조사 → 중지 또는 포트 변경 절차 작성 (#16)
 - [x] `git config --list` 주요 항목을 이메일 마스킹 후 로그로 보관
 - [x] Git 기본 브랜치 `main` 설정 확인 및 VS Code GitHub 계정 로그인 증거 추가
 - [ ] **선택 보완:** Windows 호스트의 정확한 버전(예: Windows 11 24H2) 확인 후 실행 환경 표에 기재
 
 ---
 
-**실습 결론:** Linux CLI로 파일과 권한을 관리하고, Dockerfile로 재현 가능한 NGINX 이미지를 만들었으며, 포트 매핑·바인드 마운트·Docker 볼륨을 통해 외부 접속과 데이터 저장 방식을 검증했습니다. 모든 핵심 산출물은 이 GitHub 저장소의 소스·로그·스크린샷에서 확인할 수 있습니다.
+**실습 결론:** Linux CLI로 파일과 권한을 관리하고, Dockerfile로 재현 가능한 NGINX 이미지를 만들었으며, 네트워크 네임스페이스 격리와 포트 포워딩 원리를 설명하고, 포트 충돌 진단 절차를 문서화했습니다. 포트 매핑·바인드 마운트·Docker 볼륨을 통해 외부 접속과 데이터 저장 방식도 검증했습니다. 모든 핵심 산출물은 이 GitHub 저장소의 소스·로그·스크린샷에서 확인할 수 있습니다.
