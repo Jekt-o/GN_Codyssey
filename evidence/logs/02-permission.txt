@@ -1,0 +1,51 @@
+Script started on 2026-11-03 12:27:34+09:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="68" LINES="49"]
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ cd r[Kpractice
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ cp hello.txt copy .txt
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ cat cp[Kopy.txt
+[?2004lHello Codyssey
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ mv coy[Kpy.txt renam ed.txt
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ ls -la
+[?2004ltotal 20
+drwxr-xr-x 3 happyjihun happyjihun 4096 Nov  3 12:28 [0m[01;34m.[0m
+drwxr-xr-x 5 happyjihun happyjihun 4096 Nov  3 12:22 [01;34m..[0m
+-rw-r--r-- 1 happyjihun happyjihun   15 Nov  3 12:24 hello.txt
+-rw-r--r-- 1 happyjihun happyjihun   15 Nov  3 12:28 renamed.txt
+drwxr-xr-x 2 happyjihun happyjihun 4096 Nov  3 12:24 [01;34mtest[0m
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ rm renamed.txt
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ ls -la
+[?2004ltotal 16
+drwxr-xr-x 3 happyjihun happyjihun 4096 Nov  3 12:29 [0m[01;34m.[0m
+drwxr-xr-x 5 happyjihun happyjihun 4096 Nov  3 12:22 [01;34m..[0m
+-rw-r--r-- 1 happyjihun happyjihun   15 Nov  3 12:24 hello.txt
+drwxr-xr-x 2 happyjihun happyjihun 4096 Nov  3 12:24 [01;34mtest[0m
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ ls -l hello.txt
+[?2004l-rw-r--r-- 1 happyjihun happyjihun 15 Nov  3 12:24 hello.txt
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ chmod 600 hello.t t[Kx[Kt[Kxt
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ ls-[K -l hello.txt
+[?2004l-rw------- 1 happyjihun happyjihun 15 Nov  3 12:24 hello.txt
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ chmod 644 hello.t xt
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ ls -l le[K[Khello.txt
+[?2004l-rw-r--r-- 1 happyjihun happyjihun 15 Nov  3 12:24 hello.txt
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ ls -ld test
+[?2004ldrwxr-xr-x 2 happyjihun happyjihun 4096 Nov  3 12:24 [0m[01;34mtest[0m
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ chmod 700 test
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ ls -ld test
+[?2004ldrwx------ 2 happyjihun happyjihun 4096 Nov  3 12:24 [0m[01;34mtest[0m
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ chmod 755 test
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ ls -ld test
+[?2004ldrwxr-xr-x 2 happyjihun happyjihun 4096 Nov  3 12:24 [0m[01;34mtest[0m
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ rmfir test[K[K[K[K[K[K[K[Kdir test
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ ls -la
+[?2004ltotal 12
+drwxr-xr-x 2 happyjihun happyjihun 4096 Nov  3 12:32 [0m[01;34m.[0m
+drwxr-xr-x 5 happyjihun happyjihun 4096 Nov  3 12:22 [01;34m..[0m
+-rw-r--r-- 1 happyjihun happyjihun   15 Nov  3 12:24 hello.txt
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ cd ,,
+[?2004lbash: cd: ,,: No such file or directory
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ exit[K[K[K[Kcd ..[K .
+[?2004lbash: cd: too many arguments
+[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey/practice[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey/practice[00m$ cd ..
+[?2004l[?2004h]0;happyjihun@BOOK-61MRBI9LVT: ~/GN_Codyssey[01;32mhappyjihun@BOOK-61MRBI9LVT[00m:[01;34m~/GN_Codyssey[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-03 12:33:09+09:00 [COMMAND_EXIT_CODE="0"]

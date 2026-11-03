@@ -14,8 +14,8 @@ GitHub와 Codyssey를 연동하기 위해 만들어진 Repository입니다.
 - Git:
 
 ## 2) 수행 체크리스트
-- [ ] 터미널 기본 조작 및 폴더 구성
-- [ ] 권한 변경 실습
+- [X] 터미널 기본 조작 및 폴더 구성
+- [X] 권한 변경 실습
 - [ ] Docker 환경 점검
 - [ ] hello-world 실행
 - [ ] Dockerfile 빌드 / 실행
