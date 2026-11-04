@@ -467,13 +467,13 @@ docker logs gn-codyssey-review
 
 ### 13.1 Docker Compose 기초 — 단일 서비스 실행 ✅
 
-**실습 목적:** 기존에는 \`docker run\` 명령에서 이미지·포트·실행 옵션을 직접 지정했습니다. 이제 실행 설정을 \`compose.yaml\`에 저장해, 같은 서비스를 간단한 명령으로 다시 실행할 수 있도록 합니다.
+**실습 목적:** 기존에는 `docker run` 명령에서 이미지·포트·실행 옵션을 직접 지정했습니다. 이제 실행 설정을 `compose.yaml`에 저장해, 같은 서비스를 간단한 명령으로 다시 실행할 수 있도록 합니다.
 
 **핵심 개념 — '문서화된 실행 설정'이란?** 요리할 때 재료와 순서를 레시피에 적어 두면 다른 사람도 같은 요리를 만들기 쉽습니다. Docker Compose도 **서비스를 실행하는 데 필요한 설정을 YAML 파일에 기록**해서, 다른 개발자가 같은 구성을 다시 만들기 쉽게 하는 도구입니다. 서비스가 하나여도 사용 가능하고, 나중에는 여러 서비스를 함께 관리할 수 있습니다.
 
 **실제 제출한 파일:** [compose.yaml](compose.yaml)
 
-\`\`\`yaml
+```yaml
 services:
   web:
     build: .
@@ -481,35 +481,35 @@ services:
     ports:
       - "127.0.0.1:8090:80"
     restart: unless-stopped
-\`\`\`
+```
 
 | 설정 | 역할 |
 |---|---|
-| \`services.web\` | 관리할 NGINX 웹 서버 서비스를 \`web\`이라고 지정 |
-| \`build: .\` | 현재 프로젝트의 \`Dockerfile\`을 기준으로 이미지 빌드 |
-| \`image\` | 빌드한 이미지 이름을 \`gn-codyssey-compose:1.0\`으로 지정 |
-| \`127.0.0.1:8090:80\` | 호스트의 로컬 8090번 포트 → 컨테이너의 80번 포트 연결 |
-| \`restart: unless-stopped\` | 자동 재시작 정책. 사용자가 명시적으로 중지한 경우에는 자동 재시작하지 않도록 설정 |
+| `services.web` | 관리할 NGINX 웹 서버 서비스를 `web`이라고 지정 |
+| `build: .` | 현재 프로젝트의 `Dockerfile`을 기준으로 이미지 빌드 |
+| `image` | 빌드한 이미지 이름을 `gn-codyssey-compose:1.0`으로 지정 |
+| `127.0.0.1:8090:80` | 호스트의 로컬 8090번 포트 → 컨테이너의 80번 포트 연결 |
+| `restart: unless-stopped` | 자동 재시작 정책. 사용자가 명시적으로 중지한 경우에는 자동 재시작하지 않도록 설정 |
 
 **실행 및 확인에 사용한 명령어**
 
-\`\`\`bash
+```bash
 cd ~/GN_Codyssey
 docker compose version
 docker compose config
 docker compose up -d --build
 docker compose ps
 curl -i http://localhost:8090
-\`\`\`
+```
 
 | 검증 항목 | 실제 확인한 결과 | 판정 |
 |---|---|---|
-| Compose 명령 사용 가능 | \`Docker Compose version v5.6.1\` | PASS |
-| 설정 파일 해석 | \`docker compose config\` 정상 출력 | PASS |
-| 이미지 빌드 | \`gn-codyssey-compose:1.0\` 빌드 완료 | PASS |
-| 서비스 실행 | \`gn_codyssey-web-1\`, 상태 \`Up\` | PASS |
-| 포트 게시 | \`127.0.0.1:8090->80/tcp\` | PASS |
-| 웹 서버 응답 | \`HTTP/1.1 200 OK\`, HTML 문서 반환 | PASS |
+| Compose 명령 사용 가능 | `Docker Compose version v5.6.1` | PASS |
+| 설정 파일 해석 | `docker compose config` 정상 출력 | PASS |
+| 이미지 빌드 | `gn-codyssey-compose:1.0` 빌드 완료 | PASS |
+| 서비스 실행 | `gn_codyssey-web-1`, 상태 `Up` | PASS |
+| 포트 게시 | `127.0.0.1:8090->80/tcp` | PASS |
+| 웹 서버 응답 | `HTTP/1.1 200 OK`, HTML 문서 반환 | PASS |
 
 **증거 자료**
 
@@ -521,16 +521,16 @@ curl -i http://localhost:8090
 |---|---|
 | ![Compose 단일 서비스 검증](evidence/screenshots/10-compose-single.png) | ![Compose 웹 서버 접속](evidence/screenshots/11-compose-web.png) |
 
-**왜 성공인가?** \`docker compose config\`는 설정 파일을 읽을 수 있다는 뜻이고, \`docker compose ps\`의 \`Up\`은 컨테이너가 실행 중임을 뜻합니다. 마지막으로 \`curl\`의 **HTTP 200**과 실제 HTML 응답을 통해, 컨테이너가 존재하는 데 그치지 않고 **웹 서버가 정상적으로 요청에 응답**한다는 사실까지 확인했습니다.
+**왜 성공인가?** `docker compose config`는 설정 파일을 읽을 수 있다는 뜻이고, `docker compose ps`의 `Up`은 컨테이너가 실행 중임을 뜻합니다. 마지막으로 `curl`의 **HTTP 200**과 실제 HTML 응답을 통해, 컨테이너가 존재하는 데 그치지 않고 **웹 서버가 정상적으로 요청에 응답**한다는 사실까지 확인했습니다.
 
-**배운 점:** \`docker run\`의 여러 실행 옵션을 사람이 기억하는 대신 \`compose.yaml\`에 보관하면, 실행 설정을 공유하고 동일한 구성을 재현하기 쉬워집니다. \`Dockerfile\`은 **이미지 내부에 무엇이 들어가는지**, \`compose.yaml\`은 **그 이미지를 어떤 서비스·포트·정책으로 실행할지** 정의한다는 차이도 확인했습니다.
+**배운 점:** `docker run`의 여러 실행 옵션을 사람이 기억하는 대신 `compose.yaml`에 보관하면, 실행 설정을 공유하고 동일한 구성을 재현하기 쉬워집니다. `Dockerfile`은 **이미지 내부에 무엇이 들어가는지**, `compose.yaml`은 **그 이미지를 어떤 서비스·포트·정책으로 실행할지** 정의한다는 차이도 확인했습니다.
 
 > **범위:** 이 단계에서는 **단일 웹 서비스 1개만** 검증했습니다. 멀티 컨테이너, 환경 변수, SSH 인증 등 후속 보너스 항목의 성공을 의미하지 않습니다. 브라우저 재접속이나 재현 실습 때는 Docker Engine이 실행 중이고 8090 포트가 사용 가능한지 확인해야 합니다.
 
 ### 13.2 이후 보너스 과제 — 진행 예정
 
 - [ ] Docker Compose 멀티 컨테이너 구성 및 서비스 간 통신 검증
-- [ ] Compose 운영 명령(\`up\`, \`down\`, \`ps\`, \`logs\`) 확인
+- [ ] Compose 운영 명령(`up`, `down`, `ps`, `logs`) 확인
 - [ ] 환경 변수 주입과 설정 분리 실습
 - [ ] GitHub SSH 인증 구성 및 동작 검증
 
