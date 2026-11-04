@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    image: gn-codyssey-compose:1.0
+    ports:
+      - "127.0.0.1:8090:80"
+    restart: unless-stopped

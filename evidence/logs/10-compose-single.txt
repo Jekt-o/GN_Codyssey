@@ -1,0 +1,49 @@
+=== Docker Compose Single Service Verification ===
+$ docker compose version
+Docker Compose version v5.6.1
+$ docker compose config
+name: gn_codyssey
+services:
+  web:
+    restart: unless-stopped
+    image: gn-codyssey-compose:1.0
+    networks:
+      default: null
+    build:
+      context: /home/happyjihun/GN_Codyssey
+      dockerfile: Dockerfile
+    ports:
+      - mode: ingress
+        host_ip: 127.0.0.1
+        target: 80
+        published: "8090"
+        protocol: tcp
+networks:
+  default:
+    name: gn_codyssey_default
+$ docker compose ps
+NAME                IMAGE                                                                     COMMAND                  SERVICE   CREATED          STATUS          PORTS
+gn_codyssey-web-1   sha256:35910de6e2126eb1dc6eabb4721bfb3e46e1bd46e203894fa7520f244796a3fb   "/docker-entrypoint.…"   web       24 minutes ago   Up 24 minutes   127.0.0.1:8090->80/tcp
+$ curl -i http://localhost:8090
+HTTP/1.1 200 OK
+Server: nginx/1.31.8
+Date: Wed, 04 Nov 2026 03:29:23 GMT
+Content-Type: text/html
+Content-Length: 289
+Last-Modified: Tue, 03 Nov 2026 05:46:31 GMT
+Connection: keep-alive
+ETag: "6ae97537-121"
+Accept-Ranges: bytes
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>GN Codyssey Workstation</title>
+</head>
+<body>
+    <h1>GN Codyssey Development Workstation</h1>
+    <h2>Docker Web Server Test</h2>
+    <p>Custom Docker Image Successfully Running!</p>
+</body>
+</html>
