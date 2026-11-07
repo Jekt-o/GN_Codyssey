@@ -151,6 +151,45 @@ docker images
 
 > `Exited (0)`은 정상 종료를 나타내며, `Exited (137)`은 `SIGKILL` 신호에 의한 종료를 의미합니다. 해당 백그라운드 컨테이너는 `docker stop`으로 중지한 뒤 확인했습니다.
 
+### 컨테이너 종료·유지 원리와 `attach` / `exec` 차이 — 동료평가 피드백 반영
+
+**핵심 원리:** 컨테이너의 실행 상태는 **주 프로세스(PID 1)**가 계속 동작하는지에 따라 결정됩니다. 터미널에서 나왔다고 무조건 컨테이너가 종료되는 것은 아닙니다.
+
+| 구분 | 어떤 동작인가? | 종료·유지에 미치는 영향 |
+|---|---|---|
+| `docker run -it ... bash` | 새 컨테이너를 만들고 **주 프로세스인 Bash**에 접속 | Bash에서 `exit`하면 주 프로세스가 끝나므로 컨테이너도 종료 |
+| `docker run -d ... sleep infinity` | 주 프로세스를 백그라운드에서 계속 실행 | 터미널로 돌아와도 `sleep infinity`가 실행 중이므로 컨테이너 유지 |
+| `docker attach 컨테이너명` | **이미 실행 중인 주 프로세스의 입출력**에 현재 터미널을 연결 | 주 프로세스인 Bash에서 `exit`하면 컨테이너도 종료될 수 있음 |
+| `docker exec -it 컨테이너명 bash` | 실행 중인 컨테이너 **안에서 새로운 Bash 프로세스**를 별도로 실행 | 새 Bash에서 `exit`하더라도 주 프로세스가 계속 실행 중이면 컨테이너 유지 |
+| `docker stop 컨테이너명` | 주 프로세스에 종료 신호를 보내 컨테이너 중지 | 컨테이너가 중지됨. 정상 종료되지 않으면 유예 시간 뒤 강제 종료될 수 있음 |
+
+**`attach`와 `exec`를 구분하는 가장 쉬운 방법:** `attach`는 *원래 실행 중이던 프로그램의 터미널에 다시 연결*하는 것이고, `exec`는 *실행 중인 컨테이너에 새로운 명령어를 추가로 실행*하는 것입니다.
+
+**컨테이너를 계속 실행해 두고 터미널만 빠져나오려면?** 대화형 TTY에 `attach`된 상태에서는 기본 분리 키인 **`Ctrl + P`를 누른 뒤 `Ctrl + Q`**로 연결을 해제(detach)할 수 있습니다. `exit`는 연결 해제가 아니라 현재 셸을 종료하는 명령이므로 둘을 구분해야 합니다. 이 키 조합은 Docker의 기본 detach 키 설정을 전제로 합니다.
+
+**동작 차이를 확인하는 재현 예시 (기존 제출 실습과 별도이며, 아래 명령의 실행 성공을 주장하는 증거는 아님)**
+
+```bash
+# 1. 주 프로세스(Bash)를 백그라운드에서 실행
+docker run -dit --name codyssey-attach-demo ubuntu:24.04 bash
+
+# 2. 별도의 셸을 열었다가 exit: 주 프로세스가 살아 있어 컨테이너 유지
+docker exec -it codyssey-attach-demo bash
+# (컨테이너 안에서) exit
+docker ps --filter name=codyssey-attach-demo
+
+# 3. 원래 주 프로세스에 연결
+docker attach codyssey-attach-demo
+# (연결된 상태에서) Ctrl+P, Ctrl+Q: 종료하지 않고 분리
+docker ps --filter name=codyssey-attach-demo
+
+# 4. 실습 후 컨테이너 정리
+docker stop codyssey-attach-demo
+docker rm codyssey-attach-demo
+```
+
+> **핵심 정리:** `exit`의 결과는 **어떤 셸에서 실행했는가**에 달려 있습니다. 컨테이너의 주 프로세스가 종료되면 컨테이너도 종료되지만, `docker exec`로 추가 실행한 셸만 끝나면 주 프로세스가 살아 있는 한 컨테이너는 계속 실행됩니다. `docker ps`는 실행 중인 컨테이너, `docker ps -a`는 종료된 컨테이너까지 확인하는 명령어입니다.
+
 ![Docker 컨테이너 상태 및 hello-world 로그](evidence/screenshots/02-docker-basic.png)
 
 **실행 증거:** [초기 권한 오류 로그](evidence/logs/03-docker-basic.txt) · [권한 해결 후 성공 로그](evidence/logs/07-docker-success.txt)
